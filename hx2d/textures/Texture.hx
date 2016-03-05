@@ -54,11 +54,20 @@ class Texture
             }
         ";
     private var texture: GLTexture;
-    
+
     public function new()
     {
 
     }
+    public static function fromBitmapData(data: Data): Texture
+    {
+
+    }
+    public static function fromFile(filePath: String = ""): Texture
+    {
+
+    }
+
     public function update(): Void
     {
 
