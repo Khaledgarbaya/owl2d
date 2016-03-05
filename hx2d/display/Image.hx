@@ -26,7 +26,7 @@
 
 package hx2d.display;
 import hx2d.textures.Texture;
-class Image extends DisplayObject
+class Image extends Mesh
 {
     private var texture: Texture;
     public function new(texture: Texture)

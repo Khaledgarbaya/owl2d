@@ -23,46 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package hx2d.display;
-
-class DisplayObject
+package hx2d.utils;
+class ImageProgram extends Program
 {
-    public var x(get, set): Float;
-    public var y(get, set): Float;
-
-    public var scaleX(get, set): Float;
-    public var scaleY(get, set): Float;
-
-    public var rotation(get, set): Float;
-
-    public var width(get, set): Float;
-    public var height(get, set): Float;
-
-    public var parent: DisplayObjectContainer;
-    public var name: String;// default null, used by getChildByName
-    public function new()
+    public function new(name: String)
     {
-        x = y = 0;
-        scaleX = sclaeY = 1;
-        width = height = 0;
+        super(name);
     }
-    public function dispose(): Void
-    {
-    }
-    public function render(): Void
-    {
-        // OpenGL commands go here !!!
-    }
-    public function removeFromParent(): Void
-    {
-        this.parent.removeChild(this);
-    }
-    public function setParent(parent: DisplayObject): Void
-    {
-        this.parent = parent;
-    }
-
-
-
 }
