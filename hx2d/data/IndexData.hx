@@ -23,12 +23,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 package hx2d.data;
+import types.Data;
 class IndexData
 {
-    public function new()
-    {
+    /** The number of bytes per index element. */
+   private static const INDEX_SIZE:Int = 2;
 
+   private var _rawData:Data;
+   private var _numIndices:Int;
+   private var _initialCapacity:Int;
+   private var _useQuadLayout:Bool;
+
+   // helper objects
+   private static var sVector:Array<UInt> = [];
+   private static var sTrimData:Data = new Data();
+   private static var sQuadData:Data = new Data();
+
+
+    public function new(initialCapacity:Int=48)
+    {
+        _numIndices = 0;
+       _initialCapacity = initialCapacity;
+       _useQuadLayout = true;
     }
 }
