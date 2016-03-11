@@ -23,11 +23,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package hx2d.utils;
-class ImageProgram extends Program
+
+package owl2d.display;
+import owl2d.textures.Texture;
+class Image extends Mesh
 {
-    public function new(name: String)
+    private var texture: Texture;
+    public function new(texture: Texture)
     {
-        super(name);
+        this.texture = texture;
     }
 }

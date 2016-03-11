@@ -24,10 +24,53 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.display;
-class Sprite extends DisplayObjectContainer
+package owl2d.textures;
+import gl.GLTexture;
+class Texture
 {
+    inline static private var vertexShader =
+        "
+            attribute highp   vec4  a_Position;
+            attribute lowp    vec4  a_Color;
+            attribute highp   vec2  a_TexCoord;
+            uniform highp     float u_Tint;
+            varying lowp      vec4  v_Color;
+            varying highp     vec2  v_TexCoord;
+            void main()
+            {
+                gl_Position = a_Position;
+                v_Color = a_Color * u_Tint;
+                v_TexCoord = a_TexCoord;
+            }
+        ";
+    inline static private var fragmentShader =
+        "
+            uniform sampler2D       s_Texture;
+            varying lowp      vec4  v_Color;
+            varying highp     vec2  v_TexCoord;
+            void main()
+            {
+                gl_FragColor = texture2D(s_Texture, v_TexCoord) * v_Color;
+            }
+        ";
+    private var texture: GLTexture;
+
     public function new()
     {
+
     }
+    public static function fromBitmapData(data: Data): Texture
+    {
+
+    }
+    public static function fromFile(filePath: String = ""): Texture
+    {
+
+    }
+
+    public function update(): Void
+    {
+
+    }
+
 }

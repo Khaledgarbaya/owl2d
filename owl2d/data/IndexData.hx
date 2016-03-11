@@ -24,7 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.data;
+package owl2d.data;
 import gl.GLDefines;
 import gl.GL;
 import types.Data;

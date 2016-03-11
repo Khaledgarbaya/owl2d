@@ -24,9 +24,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.display;
-import hx2d.data.IndexData;
-import hx2d.data.VertexData;
+package owl2d.display;
+import owl2d.data.IndexData;
+import owl2d.data.VertexData;
 class Mesh extends DisplayObject
 {
    private static inline var sDefaultStyle:Class = MeshStyle;

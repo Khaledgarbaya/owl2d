@@ -24,9 +24,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.core;
-import hx2d.display.DisplayObject;
-import hx2d.display.Stage;
+package owl2d.core;
+import owl2d.display.DisplayObject;
+import owl2d.display.Stage;
 class Hx2d
 {
     private var stage: Stage;

@@ -24,7 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.display;
+package owl2d.display;
 
 class DisplayObject
 {

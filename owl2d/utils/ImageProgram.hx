@@ -23,11 +23,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package hx2d.data;
-class VertexData
+package owl2d.utils;
+class ImageProgram extends Program
 {
-    public function new()
+    public function new(name: String)
     {
-
+        super(name);
     }
 }

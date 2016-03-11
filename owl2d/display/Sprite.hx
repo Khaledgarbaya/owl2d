@@ -24,13 +24,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package hx2d.display;
-import hx2d.textures.Texture;
-class Image extends Mesh
+package owl2d.display;
+class Sprite extends DisplayObjectContainer
 {
-    private var texture: Texture;
-    public function new(texture: Texture)
+    public function new()
     {
-        this.texture = texture;
     }
 }
