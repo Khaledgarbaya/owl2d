@@ -24,11 +24,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package owl2d.rendering;
-import types.Vector2;
+import owl2d.geom.Point;
+import owl2d.display.Mesh;
+import owl2d.textures.Texture;
+import owl2d.data.IndexData;
+import owl2d.data.VertexData;
 class MeshStyle
 {
     /** The vertex format expected by this style (the same as found in the MeshEffect-class). */
-    public static const VERTEX_FORMAT:VertexDataFormat = MeshEffect.VERTEX_FORMAT;
+    public static inline var VERTEX_FORMAT:VertexDataFormat = MeshEffect.VERTEX_FORMAT;
 
     private var _type:Class;
     private var _target:Mesh;
