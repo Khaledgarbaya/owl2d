@@ -415,4 +415,54 @@ class IndexData
         _rawData.writeData(sTrimData);
     }
 
+    public var numIndices(get, set): Int;
+    private function get_numIndices():Int { return _numIndices; }
+    private function set_numIndices(value:Int):Int
+    {
+        if (value != _numIndices)
+        {
+            if (_useQuadLayout) ensureQuadDataCapacity(value);
+            else _rawData.offsetLength = value * INDEX_SIZE;
+            if (value == 0) _useQuadLayout = true;
+
+            _numIndices = value;
+        }
+        return _numIndices;
+    }
+
+    public var numTriangles(get, set): Int;
+    private function get_numTriangles():Int { return _numIndices / 3; }
+    private function set_numTriangles(value:Int):Int { numIndices = value * 3; return value;}
+
+    public var numQuads(get, set): Int;
+    private function get_numQuads():Int { return _numIndices / 6; }
+    private function set_numQuads(value:Int):Int { numIndices = value * 6; return value;}
+
+    public var indexSizeInBytes(get, null): Int;
+    private function get_indexSizeInBytes():Int { return INDEX_SIZE; }
+
+    public var useQuadLayout(get, set): Bool;
+    private function get_useQuadLayout():Bool { return _useQuadLayout; }
+    private function set_useQuadLayout(value:Bool):Bool
+    {
+        if (value != _useQuadLayout)
+        {
+            if (value)
+            {
+                ensureQuadDataCapacity(_numIndices);
+                _rawData.offsetLength = 0;
+                _useQuadLayout = true;
+            }
+            else switchToGenericData();
+        }
+        return value;
+    }
+
+    public var rawData(get, null): Data;
+    private function get_rawData():Data
+    {
+        if (_useQuadLayout) return sQuadData;
+        else return _rawData;
+    }
+
 }
