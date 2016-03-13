@@ -27,7 +27,7 @@
 package owl2d.core;
 import owl2d.display.DisplayObject;
 import owl2d.display.Stage;
-class Hx2d
+class Owl2d
 {
     private var stage: Stage;
     private var mainScreen: DisplayObject;
@@ -35,7 +35,7 @@ class Hx2d
     {
         if(mainScreen != null)
         {
-            throw "::Hx2d:: mainScreen can't be null";
+            throw "::Owl2d:: mainScreen can't be null";
         }
 
         /// make sure oopengl is in the default state
