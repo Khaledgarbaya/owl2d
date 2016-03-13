@@ -361,7 +361,7 @@ class VertexData {
     /** Calculates the bounds of the 2D vertex positions identified by the given name.
          *  The positions may optionally be transformed by a matrix before calculating the bounds.
          *  If you pass an 'out' Rectangle, the result will be stored in this rectangle
-         *  instead of creating a new object. To use all vertices for the calculation, set
+         *  instead of creating a Owl2d object. To use all vertices for the calculation, set
          *  'numVertices' to '-1'. */
 
     public function getBounds(attrName:String = "position", matrix:Matrix = null,

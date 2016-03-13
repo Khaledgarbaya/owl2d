@@ -147,38 +147,21 @@ class MeshStyle
     private function onTargetAssigned(target:Mesh):Void
     { }
 
-    // enter frame event
-
-    // override public function addEventListener(type:String, listener:Function):Void
-    // {
-    //     if (type == Event.ENTER_FRAME && _target)
-    //         _target.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-    //
-    //     super.addEventListener(type, listener);
-    // }
-    //
-    // override public function removeEventListener(type:String, listener:Function):Void
-    // {
-    //     if (type == Event.ENTER_FRAME && _target)
-    //         _target.removeEventListener(type, onEnterFrame);
-    //
-    //     super.removeEventListener(type, listener);
-    // }
 
     private function onEnterFrame(event:Event):Void
     {
-        dispatchEvent(event);
+        //dispatchEvent(event);
     }
 
     // internal methods
 
     /** @private */
-    starling_internal function setTarget(target:Mesh=null, vertexData:VertexData=null,
+    private function setTarget(target:Mesh=null, vertexData:VertexData=null,
                                          indexData:IndexData=null):Void
     {
         if (_target != target)
         {
-            if (_target) _target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+//            if (_target) _target.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
             if (vertexData) vertexData.format = vertexFormat;
 
             _target = target;
@@ -187,8 +170,8 @@ class MeshStyle
 
             if (target)
             {
-                if (hasEventListener(Event.ENTER_FRAME))
-                    target.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+//                if (hasEventListener(Event.ENTER_FRAME))
+//                    target.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
                 onTargetAssigned(target);
             }

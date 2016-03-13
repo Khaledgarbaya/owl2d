@@ -25,7 +25,7 @@ class Point {
     public var y:Float;
 
     /**
-   * Creates a new point. If you pass no parameters to this method, a point is created at (0,0).
+   * Creates a Owl2d point. If you pass no parameters to this method, a point is created at (0,0).
    * @param x The horizontal coordinate.
    * @param y The vertical coordinate.
    *
@@ -37,10 +37,10 @@ class Point {
     }
 
     /**
-   * Adds the coordinates of another point to the coordinates of this point to create a new point.
+   * Adds the coordinates of another point to the coordinates of this point to create a Owl2d point.
    * @param v The point to be added.
    *
-   * @return The new point.
+   * @return The Owl2d point.
    *
    */
 
@@ -50,7 +50,7 @@ class Point {
 
     /**
    * Creates a copy of this Point object.
-   * @return The new Point object.
+   * @return The Owl2d Point object.
    *
    */
 
@@ -86,12 +86,12 @@ class Point {
     }
 
     /**
-   * Determines a point between two specified points. The parameter <code>f</code> determines where the new interpolated point is located relative to the two end points specified by parameters <code>pt1</code> and <code>pt2</code>. The closer the value of the parameter <code>f</code> is to <code>1.0</code>, the closer the interpolated point is to the first point (parameter <code>pt1</code>). The closer the value of the parameter <code>f</code> is to 0, the closer the interpolated point is to the second point (parameter <code>pt2</code>).
+   * Determines a point between two specified points. The parameter <code>f</code> determines where the Owl2d interpolated point is located relative to the two end points specified by parameters <code>pt1</code> and <code>pt2</code>. The closer the value of the parameter <code>f</code> is to <code>1.0</code>, the closer the interpolated point is to the first point (parameter <code>pt1</code>). The closer the value of the parameter <code>f</code> is to 0, the closer the interpolated point is to the second point (parameter <code>pt2</code>).
    * @param pt1 The first point.
    * @param pt2 The second point.
-   * @param f The level of interpolation between the two points. Indicates where the new point will be, along the line between <code>pt1</code> and <code>pt2</code>. If <code>f</code>=1, <code>pt1</code> is returned; if <code>f</code>=0, <code>pt2</code> is returned.
+   * @param f The level of interpolation between the two points. Indicates where the Owl2d point will be, along the line between <code>pt1</code> and <code>pt2</code>. If <code>f</code>=1, <code>pt1</code> is returned; if <code>f</code>=0, <code>pt2</code> is returned.
    *
-   * @return The new, interpolated point.
+   * @return The Owl2d, interpolated point.
    *
    */
 
@@ -116,7 +116,7 @@ class Point {
     }
 
     /**
-   * Offsets the Point object by the specified amount. The value of <code>dx</code> is added to the original value of <i>x</i> to create the new <i>x</i> value. The value of <code>dy</code> is added to the original value of <i>y</i> to create the new <i>y</i> value.
+   * Offsets the Point object by the specified amount. The value of <code>dx</code> is added to the original value of <i>x</i> to create the Owl2d <i>x</i> value. The value of <code>dy</code> is added to the original value of <i>y</i> to create the Owl2d <i>y</i> value.
    * @param dx The amount by which to offset the horizontal coordinate, <i>x</i>.
    * @param dy The amount by which to offset the vertical coordinate, <i>y</i>.
    *
@@ -145,10 +145,10 @@ class Point {
     }
 
     /**
-   * Subtracts the coordinates of another point from the coordinates of this point to create a new point.
+   * Subtracts the coordinates of another point from the coordinates of this point to create a Owl2d point.
    * @param v The point to be subtracted.
    *
-   * @return The new point.
+   * @return The Owl2d point.
    *
    */
 

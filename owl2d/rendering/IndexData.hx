@@ -76,7 +76,7 @@ class IndexData
     }
     /** Copies the index data (or a range of it, defined by 'indexID' and 'numIndices')
      *  of this instance to another IndexData object, starting at a certain target index.
-     *  If the target is not big enough, it will grow to fit all the new indices.
+     *  If the target is not big enough, it will grow to fit all the Owl2d indices.
      *
      *  <p>By passing a non-zero <code>offset</code>, you can raise all copied indices
      *  by that value in the target object.</p>
