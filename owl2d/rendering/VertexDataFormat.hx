@@ -123,12 +123,11 @@ return false;
          *  <code>bufferOffset</code> and <code>format</code>. */
 public function setVertexBufferAt(index:Int, buffer:GLBuffer, attrName:String):Void
 {
-    var attribute:VertexDataAttribute = getAttribute(attrName);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glVertexAttribPointer(index, attribute.offset, attribute.format, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    GL.enableVertexAttribArray(index);
-    GL.bindBuffer(GLDefines.ELEMENT_ARRAY_BUFFER, index);
-    GL.bufferData(GLDefines.ELEMENT_ARRAY_BUFFER, indexBufferData, attribute.format);
-    Starling.context.setVertexBufferAt(index, buffer, attribute.offset, attribute.format);
+    //Starling.context.setVertexBufferAt(index, buffer, attribute.offset, attribute.format);
 }
 
     // parsing
