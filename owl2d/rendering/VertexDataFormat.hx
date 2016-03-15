@@ -1,21 +1,21 @@
 package owl2d.rendering;
+import owl2d.utils.StringUtil;
 import gl.GLDefines;
 import gl.GLBuffer;
-class VertexDataFormat
-{
-private var _format:String;
-private var _vertexSize:Int;
-private var _attributes:Array<VertexDataAttribute>;
+class VertexDataFormat {
+    private var _format:String;
+    private var _vertexSize:Int;
+    private var _attributes:Array<VertexDataAttribute>;
 
     // format cache
-private static var sFormats:Map<String, Dynamic> = new Map<Dynamic, Dynamic>();
+    private static var sFormats:Map<String, VertexDataFormat> = new Map<String, VertexDataFormat>();
 
     /** Don't use the constructor, but call <code>VertexDataFormat.fromString</code> instead.
          *  This allows for efficient format caching. */
-public function VertexDataFormat()
-{
-_attributes = [];
-}
+
+    public function new() {
+        _attributes = [];
+    }
 
     /** Creates a Owl2d VertexDataFormat instance from the given String, or returns one from
          *  the cache (if an equivalent String has already been used before).
@@ -43,77 +43,74 @@ _attributes = [];
          *        created or resized.</li>
          *  </ul>
          */
-public static function fromString(format:String):VertexDataFormat
-{
-if(sFormats.exists(format)){
-    return sFormats[format];
-}
 
-else
-{
-var instance:VertexDataFormat = new VertexDataFormat();
-instance.parseFormat(format);
+    public static function fromString(format:String):VertexDataFormat {
+        if (sFormats.exists(format)) {
+            return sFormats[format];
+        }
 
-var normalizedFormat:String = instance._format;
+        else {
+            var instance:VertexDataFormat = new VertexDataFormat();
+            instance.parseFormat(format);
 
-if (sFormats.exists(normalizedFormat))
-{
-    instance = sFormats[normalizedFormat];
-}
+            var normalizedFormat:String = instance._format;
 
-sFormats[format] = instance;
-sFormats[normalizedFormat] = instance;
+            if (sFormats.exists(normalizedFormat)) {
+                instance = sFormats[normalizedFormat];
+            }
 
-return instance;
-}
-}
+            sFormats[format] = instance;
+            sFormats[normalizedFormat] = instance;
+
+            return instance;
+        }
+    }
 
     /** Creates a Owl2d VertexDataFormat instance by appending the given format string
          *  to the current instance's format. */
-public function extend(format:String):VertexDataFormat
-{
-return fromString(_format + ", " + format);
-}
+
+    public function extend(format:String):VertexDataFormat {
+        return fromString(_format + ", " + format);
+    }
 
     // query methods
 
     /** Returns the size of a certain vertex attribute. */
-public function getSize(attrName:String):Int
-{
-return getAttribute(attrName).size;
-}
+
+    public function getSize(attrName:String):Int {
+        return getAttribute(attrName).size;
+    }
 
     /** Returns the offset of an attribute within a vertex. */
-public function getOffset(attrName:String):Int
-{
-return getAttribute(attrName).offset;
-}
+
+    public function getOffset(attrName:String):Int {
+        return getAttribute(attrName).offset;
+    }
 
     /** Returns the format of a certain vertex attribute, identified by its name.
          *  Possible values: <code>float1, float2, float3, float4</code>. */
-public function getFormat(attrName:String):String
-{
-return getAttribute(attrName).format;
-}
+
+    public function getFormat(attrName:String):String {
+        return getAttribute(attrName).format;
+    }
 
     /** Returns the name of the attribute at the given position within the vertex format. */
-public function getName(attrIndex:Int):String
-{
-return _attributes[attrIndex].name;
-}
+
+    public function getName(attrIndex:Int):String {
+        return _attributes[attrIndex].name;
+    }
 
     /** Indicates if the format contains an attribute with the given name. */
-public function hasAttribute(attrName:String):Bool
-{
-var numAttributes:Int = _attributes.length;
 
-for (i in 0...numAttributes)
-{
-    if (_attributes[i].name == attrName) return true;
-}
+    public function hasAttribute(attrName:String):Bool {
+        var numAttributes:Int = _attributes.length;
 
-return false;
-}
+        for (i in 0...numAttributes) {
+            if (_attributes[i].name == attrName) return true;
+        }
+
+        return false;
+    }
 
     // context methods
 
@@ -121,105 +118,104 @@ return false;
          *  program input. This wraps the <code>Context3D</code>-method with the same name,
          *  automatically replacing <code>attrName</code> with the corresponding values for
          *  <code>bufferOffset</code> and <code>format</code>. */
-public function setVertexBufferAt(index:Int, buffer:GLBuffer, attrName:String):Void
-{
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glVertexAttribPointer(index, attribute.offset, attribute.format, GL_FALSE, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    //Starling.context.setVertexBufferAt(index, buffer, attribute.offset, attribute.format);
-}
+    public function setVertexBufferAt(index:Int, buffer:GLBuffer, attrName:String):Void {
+        var attribute:VertexDataAttribute = getAttribute(attrName);
+
+        GL.bindBuffer(GLDefines.ARRAY_BUFFER, buffer);
+        GL.vertexAttribPointer(index, attribute.offset, attribute.format, false, 0, 0)
+        GL.bindBuffer(GLDefines.ARRAY_BUFFER, GL.nullBuffer);
+    }
 
     // parsing
 
-private function parseFormat(format:String):Void
-{
-if (format != null && format != "")
-{
-_attributes.length = 0;
-_format = "";
+    private function parseFormat(format:String):Void {
+        if (format != null && format != "") {
+            _attributes.length = 0;
+            _format = "";
 
-var parts:Array = format.split(",");
-var numParts:Int = parts.length;
-var offset:Int = 0;
+            var parts:Array = format.split(",");
+            var numParts:Int = parts.length;
+            var offset:Int = 0;
 
-for (var i:Int=0; i<numParts; ++i)
-{
-var attrDesc:String = parts[i];
-var attrParts:Array = attrDesc.split(":");
+            for (i in 0...numParts) {
+                var attrDesc:String = parts[i];
+                var attrParts:Array = attrDesc.split(":");
 
-if (attrParts.length != 2)
-throw new ArgumentError("Missing colon: " + attrDesc);
+                if (attrParts.length != 2)
+                    throw "Missing colon: " + attrDesc;
 
-var attrName:String = StringUtil.trim(attrParts[0]);
-var attrFormat:String = StringUtil.trim(attrParts[1]);
+                var attrName:String = StringUtil.trim(attrParts[0]);
+                var attrFormat:String = StringUtil.trim(attrParts[1]);
 
-if (attrName.length == 0 || attrFormat.length == 0)
-throw new ArgumentError(("Invalid format string: " + attrDesc));
+                if (attrName.length == 0 || attrFormat.length == 0)
+                    throw "Invalid format string: " + attrDesc;
 
-var attribute:VertexDataAttribute =
-new VertexDataAttribute(attrName, attrFormat, offset);
+                var attribute:VertexDataAttribute =
+                new VertexDataAttribute(attrName, attrFormat, offset);
 
-offset += attribute.size;
+                offset += attribute.size;
 
-_format += (i == 0 ? "" : ", ") + attribute.name + ":" + attribute.format;
-_attributes[_attributes.length] = attribute; // avoid 'push'
-}
+                _format += (i == 0 ? "" : ", ") + attribute.name + ":" + attribute.format;
+                _attributes[_attributes.length] = attribute; // avoid 'push'
+            }
 
-_vertexSize = offset;
-}
-else
-{
-_format = "";
-}
-}
+            _vertexSize = offset;
+        }
+        else {
+            _format = "";
+        }
+    }
 
     /** Returns the normalized format string. */
-public function toString():String
-{
-return _format;
-}
+
+    public function toString():String {
+        return _format;
+    }
 
     // internal methods
 
     /** @private */
-internal function getAttribute(attrName:String):VertexDataAttribute
-{
-var i:Int, attribute:VertexDataAttribute;
-var numAttributes:Int = _attributes.length;
 
-for (i=0; i<numAttributes; ++i)
-{
-attribute = _attributes[i];
-if (attribute.name == attrName) return attribute;
-}
+    private function getAttribute(attrName:String):VertexDataAttribute {
+        var i:Int, attribute:VertexDataAttribute;
+        var numAttributes:Int = _attributes.length;
 
-return null;
-}
+        for (i in 0...numAttributes) {
+            attribute = _attributes[i];
+            if (attribute.name == attrName) return attribute;
+        }
+
+        return null;
+    }
 
     /** @private */
-internal function get attributes():Vector.<VertexDataAttribute>
-{
-return _attributes;
-}
+    public var attributes(get, null):Array<VertexDataAttribute>;
+
+    private function get_attributes():Array<VertexDataAttribute> {
+        return _attributes;
+    }
 
     // properties
 
     /** Returns the normalized format string. */
-public function get formatString():String
-{
-return _format;
-}
+    public var formatString(get, null):String;
+
+    public function get_formatString():String {
+        return _format;
+    }
 
     /** The size (in 32 bit units) of each vertex. */
-public function get vertexSize():Int
-{
-return _vertexSize;
-}
+    public var vertexSize(get, null):Int;
+
+    public function get_vertexSize():Int {
+        return _vertexSize;
+    }
 
     /** The Float of attributes per vertex. */
-public function get numAttributes():Int
-{
-return _attributes.length;
-}
+    public var numAttributes(get, null):Int;
+
+    public function get_numAttributes():Int {
+        return _attributes.length;
+    }
 }

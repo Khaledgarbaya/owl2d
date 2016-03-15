@@ -57,4 +57,8 @@ class StringUtil {
 
         return string.substring(0, pos + 1);
     }
+
+    public static function trim(str: String):Void {
+        return str.trim();
+    }
 }
