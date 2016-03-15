@@ -115,15 +115,16 @@ class VertexDataFormat {
     // context methods
 
     /** Specifies which vertex data attribute corresponds to a single vertex shader
-         *  program input. This wraps the <code>Context3D</code>-method with the same name,
-         *  automatically replacing <code>attrName</code> with the corresponding values for
-         *  <code>bufferOffset</code> and <code>format</code>. */
+     *  program input. This wraps the <code>Context3D</code>-method with the same name,
+     *  automatically replacing <code>attrName</code> with the corresponding values for
+     *  <code>bufferOffset</code> and <code>format</code>. */
 
     public function setVertexBufferAt(index:Int, buffer:GLBuffer, attrName:String):Void {
         var attribute:VertexDataAttribute = getAttribute(attrName);
 
         GL.bindBuffer(GLDefines.ARRAY_BUFFER, buffer);
-        GL.vertexAttribPointer(index, attribute.offset, attribute.format, false, 0, 0)
+        GL.vertexAttribPointer(index, attribute.offset, attribute.format, false, 0, 0);
+
         GL.bindBuffer(GLDefines.ARRAY_BUFFER, GL.nullBuffer);
     }
 
