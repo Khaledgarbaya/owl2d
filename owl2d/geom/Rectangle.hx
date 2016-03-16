@@ -177,4 +177,8 @@ class Rectangle {
         this.width = width;
         this.height = height
     }
+
+    public function copyFrom(rect: Rectangle):Void {
+        setTo(rect.x, rect.y, rect.width, rect.height);
+    }
 }
