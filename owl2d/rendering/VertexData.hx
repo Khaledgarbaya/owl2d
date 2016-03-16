@@ -41,6 +41,7 @@ class VertexData {
     private var _format:VertexDataFormat;
     private var _attributes:Array<VertexDataAttribute>;
     private var _numAttributes:Int;
+    public  var _tinted:Bool;
     private var _premultipliedAlpha:Bool;
 
     private var _posOffset:Int;
@@ -53,7 +54,7 @@ class VertexData {
     // helper objects
     private static var sHelperPoint:Point = new Point();
     private static var sHelperPoint3D:Vector3D = new Vector3D();
-    private static var sData:Array<Float> = [];
+    private static var sBytes:Data = new Data(0);
 
     public function new(format:Dynamic = null, initialCapacity:Int = 4) {
         if (format == null) {
@@ -80,13 +81,13 @@ class VertexData {
     }
 
     public function clear():Void {
-        _rawData.length = 0;
+        _rawData.resetOffset();
         _numVertices = 0;
     }
 
     public function clone():VertexData {
         var clone:VertexData = new VertexData(_format);
-        clone._rawData = _rawData.slice();
+        clone._rawData = _rawData.trim();
         clone._numVertices = _numVertices;
         clone._premultipliedAlpha = _premultipliedAlpha;
         return clone;
@@ -534,9 +535,9 @@ class VertexData {
         _tinted = false;
 
         for (i in 0..._numVertices) {
-            _rawData.position = pos;
+            _rawData.offset = pos;
 
-            if (_rawData.readUnsignedInt() != 0xffffffff) {
+            if (_rawData.readUInt32() != 0xffffffff) {
                 _tinted = true;
                 break;
             }
@@ -563,7 +564,7 @@ class VertexData {
         var endPos:Int = pos + numVertices * _vertexSize;
 
         while (pos < endPos) {
-            _rawData.position = pos;
+            _rawData.offset = pos;
             x = _rawData.readFloat();
             y = _rawData.readFloat();
 
@@ -588,11 +589,11 @@ class VertexData {
         var endPos:Int = pos + numVertices * _vertexSize;
 
         while (pos < endPos) {
-            _rawData.position = pos;
+            _rawData.offset = pos;
             x = _rawData.readFloat();
             y = _rawData.readFloat();
 
-            _rawData.position = pos;
+            _rawData.offset = pos;
             _rawData.writeFloat(x + deltaX);
             _rawData.writeFloat(y + deltaY);
 
@@ -626,13 +627,13 @@ class VertexData {
                 _rawData[alphaPos] = Int(alpha * 255.0);
             }
             else {
-                _rawData.position = colorPos;
+                _rawData.offset = colorPos;
                 rgba = unmultiplyAlpha(switchEndian(_rawData.readUnsignedInt()));
                 rgba = (rgba & 0xffffff00) | (Int(alpha * 255.0) & 0xff);
                 rgba = premultiplyAlpha(rgba);
 
-                _rawData.position = colorPos;
-                _rawData.writeUnsignedInt(switchEndian(rgba));
+                _rawData.offset = colorPos;
+                _rawData.writeUInt32(switchEndian(rgba));
             }
 
             colorPos += _vertexSize;
@@ -660,12 +661,12 @@ class VertexData {
 
         if (_premultipliedAlpha && alpha != 1.0) rgba = premultiplyAlpha(rgba);
 
-        _rawData.position = vertexID * _vertexSize + offset;
-        _rawData.writeUnsignedInt(switchEndian(rgba));
+        _rawData.offset = vertexID * _vertexSize + offset;
+        _rawData.writeUInt32(switchEndian(rgba));
 
         while (pos < endPos) {
-            _rawData.position = pos;
-            _rawData.writeUnsignedInt(switchEndian(rgba));
+            _rawData.offset = pos;
+            _rawData.writeUInt32(switchEndian(rgba));
             pos += _vertexSize;
         }
     }
@@ -806,13 +807,13 @@ class VertexData {
             var oldLength:Int = _numVertices * vertexSize;
             var newLength:Int = value * _vertexSize;
 
-            if (_rawData.length > oldLength) {
-                _rawData.position = oldLength;
+            if (_rawData.offsetLength > oldLength) {
+                _rawData.offsetLength = oldLength;
                 while (_rawData.bytesAvailable) _rawData.writeUnsignedInt(0);
             }
 
-            if (_rawData.length < newLength)
-                _rawData.length = newLength;
+            if (_rawData.offsetLength < newLength)
+                _rawData.offsetLength = newLength;
 
             for (i in 0..._numAttributes) {
                 var attribute:VertexDataAttribute = _attributes[i];
@@ -820,8 +821,8 @@ class VertexData {
                     var pos:Int = _numVertices * _vertexSize + attribute.offset;
 
                     for (j in _numVertices...value) {
-                        _rawData.position = pos;
-                        _rawData.writeUnsignedInt(0xffffffff);
+                        _rawData.offset = pos;
+                        _rawData.writeUInt32(0xffffffff);
                         pos += _vertexSize;
                     }
                 }
@@ -878,17 +879,17 @@ class VertexData {
                 pos = tgtAttr.offset;
 
                 for (i in 0..._numVertices) {
-                    sBytes.position = pos;
+                    sBytes.offset = pos;
                     sBytes.writeUnsignedInt(0xffffffff);
                     pos += tgtVertexSize;
                 }
             }
         }
 
-        _rawData.clear();
-        _rawData.length = sBytes.length;
-        _rawData.writeBytes(sBytes);
-        sBytes.clear();
+        _rawData.resetOffset();
+        _rawData.offsetLength = sBytes.offsetLength;
+        _rawData.writeData(sBytes);
+        sBytes.resetOffset();
 
         _format = value;
         _attributes = _format.attributes;
