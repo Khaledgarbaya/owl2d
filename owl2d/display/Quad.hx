@@ -1,8 +1,8 @@
 package owl2d.display;
+import owl2d.geom.Matrix3D;
 import owl2d.geom.Point;
 import owl2d.textures.Texture;
 import owl2d.rendering.MeshStyle;
-import types.Matrix4;
 import owl2d.rendering.VertexData;
 import owl2d.rendering.IndexData;
 import owl2d.geom.Matrix;
@@ -14,7 +14,7 @@ class Quad extends Mesh {
     // helper objects
     private static var sPoint3D:Vector3 = new Vector3();
     private static var sMatrix:Matrix = new Matrix();
-    private static var sMatrix3D:Matrix4 = new Matrix4();
+    private static var sMatrix3D:Matrix3D = new Matrix3D();
 
     /** Creates a quad with a certain size and color. */
 
