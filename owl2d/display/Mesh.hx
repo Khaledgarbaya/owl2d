@@ -48,7 +48,7 @@ class Mesh extends DisplayObject {
         setStyle(style, false);
     }
 
-    public function setStyle(meshStyle:MeshStyle = null, mergeWithPredecessor:Bool = true, style:MeshStyle = null):Void {
+    public function setStyle(meshStyle:MeshStyle = null, mergeWithPredecessor:Bool = true):Void {
         super();
         if (meshStyle == null) meshStyle = cast(new SDefaultStyle(), MeshStyle);
         else if (meshStyle == style) return;
